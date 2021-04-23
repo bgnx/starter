@@ -1,5 +1,5 @@
 let = actualizeDOM = () => {
-  document.body.replaceChild(App(), document.body.firstElementChild);
+  ReactDOM.render(App(), document.body.firstElementChild);
 };
 
 //атомарные компоненты
@@ -15,35 +15,40 @@ let Frame = ({
   paddingH = 0,
   paddingV = 0
 }) => {
-  let el = document.createElement(`div`);
-  el.style.boxSizing = `border-box`;
-  el.style.position = `relative`;
-  el.style.overflow = `hidden`;
-  el.style.display = `flex`;
-  el.style.flexShrink = 0;
+  return React.createElement(`div`, {
+    style: {
+      boxSizing: `border-box`,
+      position: `relative`,
+      overflow: `hidden`,
+      display: `flex`,
+      flexShrink: 0,
 
-  el.style.flexDirection = isHorizontal ? `row` : `column`;
-  el.style.flexGrow = flexGrow;
-  el.style.alignSelf = alignSelf;
+      flexDirection: isHorizontal ? `row` : `column`,
+      flexGrow: flexGrow,
+      alignSelf: alignSelf,
 
-  el.style.paddingLeft = el.style.paddingRight = `${paddingH}px`;
-  el.style.paddingTop = el.style.paddingBottom = `${paddingV}px`;
+      paddingLeft: `${paddingH}px`,
+      paddingRight: `${paddingH}px`,
+      paddingTop: `${paddingV}px`,
+      paddingBottom: `${paddingV}px`,
 
-  el.style.background = background;
-  el.style.width = `${width}px`;
-  el.style.height = `${height}px`;
-  el.style.borderRadius = `${borderRadius}px`;
-
-  children.forEach(childEl => el.appendChild(childEl));
-  return el;
+      background: background,
+      width: `${width}px`,
+      height: `${height}px`,
+      borderRadius: `${borderRadius}px`,
+    },
+    children: children,
+  });
 };
 
 let Text = ({ text = ``, color = `black`, fontSize = 16 }) => {
-  let el = document.createElement(`div`);
-  el.style.color = color;
-  el.style.fontSize = `${fontSize}px`;
-  el.textContent = text;
-  return el;
+  return React.createElement(`div`, {
+    style: {
+      color: color,
+      fontSize: `${fontSize}px`,
+    },
+    children: text,
+  });
 };
 
 //приложение - состояние где будем хранить данные и компоненты приложения которые собираются из атомарных компонентов
